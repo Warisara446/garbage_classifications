@@ -1,0 +1,13 @@
+train: D:\garbage_classification\garbage_classification_yolo11\datasets_rgb\train\images
+val: D:\garbage_classification\garbage_classification_yolo11\datasets_rgb\valid\images
+test: D:\garbage_classification\garbage_classification_yolo11\datasets_rgb\test\images
+
+nc: 9
+names: ['cardboard', 'electronic', 'general', 'glass', 'lightbulb', 'metal', 'organic', 'paper', 'plastic']
+
+roboflow:
+  workspace: trash-kupyl
+  project: waste_datasets
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/trash-kupyl/waste_datasets/dataset/2
