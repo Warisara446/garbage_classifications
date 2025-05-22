@@ -18,13 +18,14 @@ const labelGroups = {
 // 🗑️ ชื่อถังขยะพร้อมอิโมจิ
 const binTitles = {
   general: "🟢 ขยะทั่วไป",
-  recycle: "🟡 ขยะรีไซเคิล ♻️",
-  hazardous: "🔴 ขยะอันตราย ⚠️",
-  organic: "🔵 ขยะอินทรีย์ 🍃",
+  recycle: "🟡 ขยะรีไซเคิล",
+  hazardous: "🔴 ขยะอันตราย",
+  organic: "🔵 ขยะอินทรีย์",
 };
 
 const ImageUpload = () => {
-  const [imageFile, setImageFile] = useState(null);
+  const [, setImageFile] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [predictions, setPredictions] = useState([]);
   const imgRef = useRef(null);
@@ -55,31 +56,35 @@ const ImageUpload = () => {
     }
   };
 
-  useEffect(() => {
-    if (!imgRef.current || predictions.length === 0) return;
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
-    const naturalWidth = imgRef.current.naturalWidth;
-    const naturalHeight = imgRef.current.naturalHeight;
+  useEffect(() => {
+    if (!imgRef.current || predictions.length === 0 || !imageLoaded) return;
+
+    // const naturalWidth = imgRef.current.naturalWidth;
+    // const naturalHeight = imgRef.current.naturalHeight;
     const displayWidth = imgRef.current.clientWidth;
     const displayHeight = imgRef.current.clientHeight;
 
-    const scaleX = displayWidth / naturalWidth;
-    const scaleY = displayHeight / naturalHeight;
+    // const scaleX = displayWidth / naturalWidth;
+    // const scaleY = displayHeight / naturalHeight;
 
     const newBoxes = predictions.map((pred) => {
       const { x, y, width, height } = pred.boundingBox;
       return {
         label: pred.label,
         confidence: pred.confidence,
-        x: x * scaleX,
-        y: y * scaleY,
-        width: width * scaleX,
-        height: height * scaleY,
+        x: x * displayWidth,
+        y: y * displayHeight,
+        width: width * displayWidth,
+        height: height * displayHeight,
       };
     });
 
     setBoxes(newBoxes);
-  }, [predictions, previewUrl]);
+  }, [predictions, previewUrl, imageLoaded]);
 
   return (
     <div className="container">
@@ -100,23 +105,30 @@ const ImageUpload = () => {
 
       {previewUrl && (
         <div className="camera-wrapper position-relative mx-auto">
-          <img src={previewUrl} ref={imgRef} alt="Uploaded" className="camera-view" />
-          {boxes.map((box, i) => (
-            <div
-              key={i}
-              className="bounding-box"
-              style={{
-                left: `${box.x}px`,
-                top: `${box.y}px`,
-                width: `${box.width}px`,
-                height: `${box.height}px`,
-              }}
-            >
-              <span className="label">
-                {box.label} ({(box.confidence * 100).toFixed(1)}%)
-              </span>
-            </div>
-          ))}
+          <img src={previewUrl} ref={imgRef} alt="Uploaded" className="camera-view" onLoad={handleImageLoad} />
+          {boxes.map((box, i) => {
+            // หาว่า label นี้อยู่ในกลุ่มไหน
+            let boxType = Object.keys(labelGroups).find((bin) =>
+              labelGroups[bin].includes(box.label.toLowerCase())
+            );
+
+            return (
+              <div
+                key={i}
+                className={`bounding-box ${boxType || ""}`} // 👉 เพิ่ม class ตามประเภท
+                style={{
+                  left: `${box.x}px`,
+                  top: `${box.y}px`,
+                  width: `${box.width}px`,
+                  height: `${box.height}px`,
+                }}
+              >
+                <span className="label">
+                  {box.label} ({(box.confidence * 100).toFixed(1)}%)
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
 
