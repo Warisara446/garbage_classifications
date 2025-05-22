@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 const getBinType = (label) => {
   const recycle = ["cardboard", "paper", "plastic", "metal"];
   const general = ["general"];

@@ -33,21 +33,38 @@ h1 {
 
 .bounding-box {
   position: absolute;
-  pointer-events: none;
+  border: 2px solid transparent; /* เปลี่ยนจาก red เป็น transparent */
+  background-color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  padding: 2px 6px;
-  display: flex;
-  align-items: flex-start;
-  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 2px 4px;
+  z-index: 10;
+}
+
+.bounding-box.general {
+  border-color: #198754;
+  color: #198754;
+}
+
+.bounding-box.recycle {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.bounding-box.hazardous {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.bounding-box.organic {
+  border-color: #0d6efd;
+  color: #0d6efd;
 }
 
 .label {
   background: transparent !important; /* ลบพื้นหลัง label เดิม */
   color: inherit;
 }
-
 
 .upload-section {
   text-align: center;
@@ -94,14 +111,17 @@ h1 {
   flex-wrap: nowrap;  
   margin-top: 2rem;
 }
+
 .bin-card {
   background-color: #f8f9fa;
+  width: 300px;
+  height: 140px;
   border-radius: 10px;
-  padding: 20px;
+  padding: 8px;
   margin-bottom: 1.5rem;
   box-shadow: none;
   text-align: left;
-  border-left: 12px solid transparent;
+  border-left: 15px solid transparent;
   transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }
 

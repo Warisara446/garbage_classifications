@@ -152,9 +152,9 @@ const RealtimeCamera = () => {
 
       <div className="bins-wrapper">
         {renderBin("general", "🟢 ขยะทั่วไป", "bin-general")}
-        {renderBin("recycle", "🟡 ขยะรีไซเคิล ♻️", "bin-recycle")}
-        {renderBin("hazardous", "🔴 ขยะอันตราย ⚠️", "bin-hazardous")}
-        {renderBin("organic", "🔵 ขยะอินทรีย์ 🍃", "bin-organic")}
+        {renderBin("recycle", "🟡 ขยะรีไซเคิล", "bin-recycle")}
+        {renderBin("hazardous", "🔴 ขยะอันตราย", "bin-hazardous")}
+        {renderBin("organic", "🔵 ขยะอินทรีย์", "bin-organic")}
       </div>
     </div>
   );
