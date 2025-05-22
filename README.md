@@ -39,3 +39,18 @@ python detect.py
 # สามารถแก้ ส่วนของ datasets ที่ใช้ทดสอบได้ rgb or gray ได้เลือกที่ต้องการ
 
 ```
+
+# How to Run Server
+
+### Backend
+```
+python app.py
+
+```
+
+### Frontend
+```
+npm install bootstrap react-webcam
+npm start
+
+```
